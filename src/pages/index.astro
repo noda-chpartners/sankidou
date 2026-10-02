@@ -1,17 +1,241 @@
 ---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import logo from "../assets/images/logo.png";
+import storefront from "../assets/images/line_oa_chat_261002_101719.jpg";
+import workshop from "../assets/images/line_oa_chat_261002_101723.jpg";
+import machines from "../assets/images/line_oa_chat_261002_101726.jpg";
+import sewing from "../assets/images/line_oa_chat_261002_101728.jpg";
+import finishing from "../assets/images/line_oa_chat_261002_101730.jpg";
+import door from "../assets/images/line_oa_chat_261002_101732.jpg";
+import sign from "../assets/images/line_oa_chat_261002_101734.jpg";
+import postMachine from "../assets/images/line_oa_chat_261002_101736.jpg";
 
+const title = "山憙堂（サンキドウ）| 八王子の靴修理・オーダー靴";
+const description =
+	"東京都八王子市万町の靴工房、山憙堂。靴・鞄の修理、クリーニング、ワークブーツカスタム、乗馬靴修理、コンフォートシューズ、オーダー靴。JR八王子駅徒歩10分。電話 042-686-2898。";
+
+const mapQuery = "東京都八王子市万町34-1";
+const mapHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`;
+const mapEmbed = `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=16&hl=ja&output=embed`;
+const year = new Date().getFullYear();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={title} description={description}>
+	<header class="signbar" data-header>
+		<a class="brand" href="#top">
+			<Image
+				src={logo}
+				alt="山憙堂"
+				class="brand__mark"
+				widths={[200, 400]}
+				sizes="168px"
+			/>
+			<span class="brand__yomi">サンキドウ</span>
+		</a>
+		<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+			<span class="sr-only">メニュー</span>
+			<span class="nav-toggle__bar"></span>
+			<span class="nav-toggle__bar"></span>
+		</button>
+		<nav id="site-nav" class="nav" aria-label="主要">
+			<a href="#work">取り扱い</a>
+			<a href="#jobs">修理例</a>
+			<a href="#shop">作業場</a>
+			<a href="#visit">営業案内</a>
+			<a class="nav__phone" href="tel:0426862898">042-686-2898</a>
+		</nav>
+	</header>
+
+	<main id="main">
+		<section class="door" id="top">
+			<div class="door__photo">
+				<Image
+					src={storefront}
+					alt="山憙堂の店先。ガラス戸の奥に作業場が続いている"
+					widths={[480, 750]}
+					sizes="100vw"
+					quality={80}
+					loading="eager"
+					fetchpriority="high"
+				/>
+			</div>
+			<div class="door__plate">
+				<p class="door__place">八王子市万町　JR八王子駅 徒歩10分</p>
+				<h1>履き慣れた一足を、直して返す。</h1>
+				<a class="door__call" href="tel:0426862898">042-686-2898</a>
+			</div>
+		</section>
+
+		<section class="board" id="work">
+			<div class="board__sign">
+				<Image
+					src={sign}
+					alt="店先の黒い看板。山憙堂、foot equipment"
+					widths={[480, 750]}
+					sizes="100vw"
+					quality={76}
+				/>
+			</div>
+			<div class="board__sheet">
+				<header class="board__head" data-reveal>
+					<p>修理、手入れ、販売、オーダー</p>
+					<h2>取り扱い</h2>
+				</header>
+				<ul class="board__grid" data-reveal-stagger>
+					<li>
+						<h3>一般鞄・靴修理</h3>
+						<p>ビジネスシューズのソールから、鞄まで。</p>
+					</li>
+					<li>
+						<h3>靴のクリーニング</h3>
+						<p>汚れを落とし、革の表面を整えます。</p>
+					</li>
+					<li>
+						<h3>ワークブーツカスタム</h3>
+						<p>レッドウィングなどのブーツを、ソールから。</p>
+					</li>
+					<li>
+						<h3>乗馬靴修理</h3>
+						<p>ファスナー交換や、乗馬ブーツの手入れ。</p>
+					</li>
+					<li>
+						<h3>コンフォートシューズ販売</h3>
+						<p>歩きやすさを基準に、靴をご案内します。</p>
+					</li>
+					<li>
+						<h3>オーダー靴制作</h3>
+						<p>既成では合わない足に、一足から。</p>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<section class="bench" id="jobs">
+			<header class="bench__head" data-reveal>
+				<p>たとえば、こんな修理</p>
+				<h2>修理の例</h2>
+			</header>
+			<div class="bench__photo">
+				<Image
+					src={workshop}
+					alt="作業台に靴が並び、奥まで機械が続く工房"
+					widths={[480, 750]}
+					sizes="100vw"
+					quality={78}
+				/>
+				<p class="bench__cap">作業台</p>
+			</div>
+			<div class="slips" data-reveal-stagger>
+				<article class="slip">
+					<p class="slip__shoe">レッドウィング</p>
+					<p class="slip__work">オールソール</p>
+				</article>
+				<article class="slip">
+					<p class="slip__shoe">ワークブーツカスタム</p>
+					<p class="slip__work">オールソール</p>
+				</article>
+				<article class="slip">
+					<p class="slip__shoe">乗馬ブーツ</p>
+					<p class="slip__work">ファスナー交換</p>
+				</article>
+				<article class="slip">
+					<p class="slip__shoe">乗馬ブーツ</p>
+					<p class="slip__work">クリーニング</p>
+				</article>
+				<article class="slip">
+					<p class="slip__shoe">ビジネスシューズ</p>
+					<p class="slip__work">ハーフソールラバー</p>
+				</article>
+			</div>
+			<p class="bench__note" data-reveal>仕上がりや可否は、靴を見てからご案内します。まずはお電話を。</p>
+		</section>
+
+		<section class="depth" id="shop">
+			<div class="depth__pin" data-pin>
+				<header class="depth__label" data-reveal>
+					<p>店の中の機械</p>
+					<h2>作業場</h2>
+				</header>
+				<div class="depth__track" data-track>
+					<figure>
+						<div class="shot">
+							<Image src={machines} alt="棚のワークブーツと、緑の製靴機械" widths={[480, 750]} sizes="42vw" quality={76} />
+						</div>
+						<figcaption>ブーツとミシン</figcaption>
+					</figure>
+					<figure>
+						<div class="shot">
+							<Image src={sewing} alt="糸巻きとミシンが並ぶ縫製の台" widths={[480, 750]} sizes="42vw" quality={76} />
+						</div>
+						<figcaption>縫製台</figcaption>
+					</figure>
+					<figure>
+						<div class="shot">
+							<Image src={postMachine} alt="緑のポストマシンの頭部" widths={[480, 750]} sizes="42vw" quality={76} />
+						</div>
+						<figcaption>ポストマシン</figcaption>
+					</figure>
+					<figure>
+						<div class="shot shot--tall">
+							<Image src={finishing} alt="靴底を整える研磨機" widths={[480, 750]} sizes="42vw" quality={76} />
+						</div>
+						<figcaption>靴底の仕上げ</figcaption>
+					</figure>
+				</div>
+			</div>
+		</section>
+
+		<section class="visit" id="visit">
+			<div class="visit__door">
+				<Image
+					src={door}
+					alt="入口ガラスに貼られた、修理とコンフォートシューズの案内"
+					widths={[480, 750]}
+					sizes="(min-width: 900px) 46vw, 100vw"
+					quality={76}
+				/>
+			</div>
+			<div class="visit__card">
+				<header data-reveal>
+					<p>時間、場所、電話</p>
+					<h2>営業案内</h2>
+				</header>
+				<a class="visit__tel" href="tel:0426862898">042-686-2898</a>
+				<p class="visit__ask">在庫と作業の様子は、電話で聞いてください。</p>
+				<dl class="hours">
+					<div>
+						<dt>平日</dt>
+						<dd>11時 – 19時30分</dd>
+					</div>
+					<div>
+						<dt>日・祝</dt>
+						<dd>10時 – 17時</dd>
+					</div>
+					<div>
+						<dt>定休</dt>
+						<dd>木曜日、第1日曜日、第4日曜日</dd>
+					</div>
+				</dl>
+				<address>
+					東京都八王子市万町34-1<br />
+					JR八王子駅 徒歩10分
+				</address>
+				<div class="map">
+					<iframe src={mapEmbed} title="山憙堂の地図" loading="lazy" referrerpolicy="no-referrer-when-downgrade" tabindex="-1"></iframe>
+					<a href={mapHref} target="_blank" rel="noopener noreferrer">地図を開く</a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer class="foot">
+		<a class="foot__ig" href="https://www.instagram.com/sankidoo" target="_blank" rel="noopener noreferrer">Instagram / @sankidoo</a>
+		<p>東京都八王子市万町34-1</p>
+		<p>&copy; {year} 山憙堂</p>
+	</footer>
+</Layout>
+
+<script>
+	import "../scripts/motion.ts";
+</script>

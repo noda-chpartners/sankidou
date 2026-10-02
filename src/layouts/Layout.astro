@@ -8,36 +8,120 @@ interface Props {
 
 const { title, description } = Astro.props;
 
+const site = Astro.site ?? new URL("https://sankidou.pages.dev");
+const canonical = new URL(Astro.url.pathname, site);
+const image = new URL("/ogp.png", site).href;
+const logo = new URL("/apple-touch-icon.png", site).href;
+const map = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("東京都八王子市万町34-1")}`;
+
+const offer = (name: string, text: string) => ({
+	"@type": "Offer",
+	itemOffered: {
+		"@type": "Service",
+		name,
+		description: text,
+		areaServed: "八王子市",
+		provider: { "@id": `${site.href}#business` },
+	},
+});
+
 const jsonLd = {
 	"@context": "https://schema.org",
-	"@type": "ShoeStore",
-	name: "山憙堂",
-	alternateName: ["サンキドウ", "sankidoo"],
-	description,
-	telephone: "+81-42-686-2898",
-	image: "/ogp.png",
-	address: {
-		"@type": "PostalAddress",
-		streetAddress: "万町34-1",
-		addressLocality: "八王子市",
-		addressRegion: "東京都",
-		addressCountry: "JP",
-	},
-	openingHoursSpecification: [
+	"@graph": [
 		{
-			"@type": "OpeningHoursSpecification",
-			dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Friday", "Saturday"],
-			opens: "11:00",
-			closes: "19:30",
+			"@type": "WebSite",
+			"@id": `${site.href}#website`,
+			url: site.href,
+			name: "山憙堂",
+			alternateName: ["サンキドウ", "sankidoo"],
+			inLanguage: "ja",
+			publisher: { "@id": `${site.href}#business` },
 		},
 		{
-			"@type": "OpeningHoursSpecification",
-			dayOfWeek: ["Sunday", "PublicHolidays"],
-			opens: "10:00",
-			closes: "17:00",
+			"@type": "WebPage",
+			"@id": `${canonical.href}#webpage`,
+			url: canonical.href,
+			name: title,
+			description,
+			inLanguage: "ja",
+			isPartOf: { "@id": `${site.href}#website` },
+			about: { "@id": `${site.href}#business` },
+			primaryImageOfPage: { "@id": `${site.href}#ogp` },
+		},
+		{
+			"@type": "ImageObject",
+			"@id": `${site.href}#ogp`,
+			url: image,
+			width: 1200,
+			height: 628,
+			caption: "山憙堂 foot equipment",
+		},
+		{
+			"@type": "ShoeStore",
+			"@id": `${site.href}#business`,
+			name: "山憙堂",
+			alternateName: ["サンキドウ", "sankidoo"],
+			slogan: "履き慣れた一足を、直して返す。",
+			description: `${description} 定休日は木曜日、第1日曜日、第4日曜日。`,
+			url: site.href,
+			image,
+			logo,
+			telephone: "+81-42-686-2898",
+			currenciesAccepted: "JPY",
+			address: {
+				"@type": "PostalAddress",
+				postalCode: "192-0903",
+				streetAddress: "万町34-1",
+				addressLocality: "八王子市",
+				addressRegion: "東京都",
+				addressCountry: "JP",
+			},
+			hasMap: map,
+			areaServed: {
+				"@type": "City",
+				name: "八王子市",
+				containedInPlace: {
+					"@type": "AdministrativeArea",
+					name: "東京都",
+				},
+			},
+			openingHoursSpecification: [
+				{
+					"@type": "OpeningHoursSpecification",
+					dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Friday", "Saturday"],
+					opens: "11:00",
+					closes: "19:30",
+				},
+				{
+					"@type": "OpeningHoursSpecification",
+					dayOfWeek: ["Sunday", "PublicHolidays"],
+					opens: "10:00",
+					closes: "17:00",
+					description: "第1日曜日と第4日曜日は定休",
+				},
+			],
+			contactPoint: {
+				"@type": "ContactPoint",
+				telephone: "+81-42-686-2898",
+				contactType: "customer service",
+				availableLanguage: "Japanese",
+				areaServed: "JP",
+			},
+			hasOfferCatalog: {
+				"@type": "OfferCatalog",
+				name: "取り扱い",
+				itemListElement: [
+					offer("一般鞄・靴修理", "ビジネスシューズのソールから、鞄まで。"),
+					offer("靴のクリーニング", "汚れを落とし、革の表面を整えます。"),
+					offer("ワークブーツカスタム", "レッドウィングなどのブーツを、ソールから。"),
+					offer("乗馬靴修理", "ファスナー交換や、乗馬ブーツの手入れ。"),
+					offer("コンフォートシューズ販売", "歩きやすさを基準に、靴をご案内します。"),
+					offer("オーダー靴制作", "既成では合わない足に、一足から。"),
+				],
+			},
+			sameAs: ["https://www.instagram.com/sankidoo"],
 		},
 	],
-	sameAs: ["https://www.instagram.com/sankidoo"],
 };
 ---
 
@@ -49,22 +133,30 @@ const jsonLd = {
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical.href} />
+		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 		<meta name="theme-color" content="#000000" />
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content="ja_JP" />
+		<meta property="og:site_name" content="山憙堂" />
+		<meta property="og:url" content={canonical.href} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content="/ogp.png" />
+		<meta property="og:image" content={image} />
+		<meta property="og:image:secure_url" content={image} />
+		<meta property="og:image:type" content="image/png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="628" />
 		<meta property="og:image:alt" content="山憙堂 foot equipment" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content="/ogp.png" />
+		<meta name="twitter:image" content={image} />
+		<meta name="twitter:image:alt" content="山憙堂 foot equipment" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap-index.xml" />
 		<script is:inline>
 			document.documentElement.classList.add("js");
 		</script>

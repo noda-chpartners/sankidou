@@ -2,13 +2,12 @@
 import { Image } from "astro:assets";
 import Layout from "../layouts/Layout.astro";
 import logo from "../assets/images/logo.png";
-import storefront from "../assets/images/line_oa_chat_261002_101719.jpg";
+import storefront from "../assets/images/52760942-2876-4BA1-A9A8-8C33BF50ADBA.png";
 import workshop from "../assets/images/line_oa_chat_261002_101723.jpg";
 import machines from "../assets/images/line_oa_chat_261002_101726.jpg";
 import sewing from "../assets/images/line_oa_chat_261002_101728.jpg";
 import finishing from "../assets/images/line_oa_chat_261002_101730.jpg";
-import door from "../assets/images/line_oa_chat_261002_101732.jpg";
-import sign from "../assets/images/line_oa_chat_261002_101734.jpg";
+import sign from "../assets/images/sign-banner.jpg";
 import postMachine from "../assets/images/line_oa_chat_261002_101736.jpg";
 
 const title = "山憙堂（サンキドウ）｜八王子の靴修理・オーダー靴";
@@ -52,7 +51,7 @@ const year = new Date().getFullYear();
 			<div class="door__photo">
 				<Image
 					src={storefront}
-					alt="山憙堂の店先。ガラス戸の奥に作業場が続いている"
+					alt="夕暮れの山憙堂の店先。看板の下にガラス戸が並び、両脇に植栽がある"
 					widths={[480, 750]}
 					sizes="100vw"
 					quality={80}
@@ -72,9 +71,9 @@ const year = new Date().getFullYear();
 				<Image
 					src={sign}
 					alt="店先の黒い看板。山憙堂、foot equipment"
-					widths={[480, 750]}
+					widths={[480, 768, 1280]}
 					sizes="100vw"
-					quality={76}
+					quality={82}
 				/>
 			</div>
 			<div class="board__sheet">
@@ -187,15 +186,6 @@ const year = new Date().getFullYear();
 		</section>
 
 		<section class="visit" id="visit">
-			<div class="visit__door">
-				<Image
-					src={door}
-					alt="入口ガラスに貼られた、修理とコンフォートシューズの案内"
-					widths={[480, 750]}
-					sizes="(min-width: 900px) 46vw, 100vw"
-					quality={76}
-				/>
-			</div>
 			<div class="visit__card">
 				<header data-reveal>
 					<p>時間、場所、電話</p>
